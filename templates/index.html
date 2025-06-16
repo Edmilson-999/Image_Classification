@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <title>Classificador de Imagem</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='./style.css') }}">
+</head>
+<body>
+    <h2>Classificador de Imagens</h2>
+    
+    <form method="POST" enctype="multipart/form-data" id="upload-form">
+        <label>Escolha uma imagem:</label>
+        <input type="file" name="image" id="image-input" accept="image/*" required>
+        <img id="preview" src="#" alt="Preview da imagem" style="display:none; max-width: 300px; margin-top: 10px;">
+        <button type="submit">Classificar</button>
+    </form>
+
+    {% if prediction %}
+        <div class="result {{ 'aluno' if prediction == 'Aluno' else 'outro' }}">
+            {% if prediction == 'Aluno' %}
+                ✅ <strong>{{ prediction }}</strong>: Esta imagem parece ser do aluno.
+            {% else %}
+                ❌ <strong>{{ prediction }}</strong>: Esta imagem é de outra pessoa.
+            {% endif %}
+        </div>
+    {% endif %}
+
+    <script>
+        // Mostrar preview da imagem antes de enviar
+        const input = document.getElementById('image-input');
+        const preview = document.getElementById('preview');
+
+        input.addEventListener('change', () => {
+            const file = input.files[0];
+            if (file) {
+                preview.src = URL.createObjectURL(file);
+                preview.style.display = 'block';
+            } else {
+                preview.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
