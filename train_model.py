@@ -1,4 +1,5 @@
 import os
+import matplotlib.pyplot as plt
 import tensorflow as tf
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras.applications import MobileNetV2
@@ -61,3 +62,32 @@ print(f"\nTest Accuracy: {acc:.2f}")
 
 # Salvar versão final do modelo
 model.save('model/final_model.h5')
+
+# ----- Geração de gráficos -----
+
+# Gráfico de Acurácia
+plt.figure(figsize=(10, 4))
+plt.plot(history.history['accuracy'], label='Treino')
+plt.plot(history.history['val_accuracy'], label='Validação')
+plt.title('Acurácia por Época')
+plt.xlabel('Época')
+plt.ylabel('Acurácia')
+plt.legend()
+plt.grid(True)
+plt.tight_layout()
+plt.savefig("model/accuracy_plot.png")
+plt.show()
+
+# Gráfico de Perda
+plt.figure(figsize=(10, 4))
+plt.plot(history.history['loss'], label='Treino')
+plt.plot(history.history['val_loss'], label='Validação')
+plt.title('Perda por Época')
+plt.xlabel('Época')
+plt.ylabel('Perda')
+plt.legend()
+plt.grid(True)
+plt.tight_layout()
+plt.savefig("model/loss_plot.png")
+plt.show()
+
